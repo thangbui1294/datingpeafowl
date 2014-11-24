@@ -1,0 +1,42 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 13, 2014, 9:46:45 AM
+    Author     : sarmeet
+*/
+
+div.vertical-line{
+  width: 1px; /* Line width */
+  background-color: black; /* Line color */
+  height: 100%; /* Override in-line if you want specific height. */
+  float: left; /* Causes the line to float to left of content. 
+    You can instead use position:absolute or display:inline-block
+    if this fits better with your design */
+}
+
+.custom-heading-js{
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.custom-heading-po{
+    font-family: 'Poiret One', cursive;
+}
+
+body{
+    background-image: url("../img/bg.jpg");
+    
+}
+
+.theme-bg{
+    background-image: url("../img/bg.jpg");
+    background-color: rgba(0, 0, 0, .07);
+    border-radius: 20px;
+    padding:10px;
+    
+}
+.baby-blue-bg{
+    background-color: rgba(0,0,225,.04);
+}
