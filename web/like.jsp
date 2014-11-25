@@ -10,27 +10,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-
-    if (session.getAttribute("pid") != null && request.getAttribute("vid") != null) {
-        if (session.getAttribute("pid") != "" && request.getAttribute("vid") != "") {
-            String LikeAddQuery = "INSERT INTO `Likes` VALUES ('"+ session.getAttribute("pid") + "','"+ request.getAttribute("vid")+"','" + new java.sql.Date(new java.util.Date().getTime()) + "');";
-            DBConnection.ExecUpdateQuery(LikeAddQuery);
-        }
+    if ( request.getParameter("vid")!= "" || request.getParameter("vid")!= null){
+        String likeQuery = "insert into Likes values ('"+session.getAttribute("pid")+"','" + request.getParameter("vid")+"','"+ new java.sql.Date(new java.util.Date().getTime()) + "');";
+        DBConnection.ExecUpdateQuery(likeQuery);
+        response.sendRedirect("profileview.jsp?vid="+request.getParameter("vid"));
     }
-    response.sendRedirect("");
+
+
     %>
 
 
 
-
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-
-
-
-
-</body>
-</html>

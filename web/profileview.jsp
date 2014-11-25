@@ -24,6 +24,7 @@
         request.setAttribute("creationDate", profiles.getDate("CreationDate"));
         request.setAttribute("updateDate", profiles.getDate("LastModDate"));
         request.setAttribute("hairColor", profiles.getString("HairColor"));
+
     }
     else{
         response.sendRedirect("profile.jsp");
