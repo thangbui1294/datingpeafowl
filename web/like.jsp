@@ -12,6 +12,7 @@
 <%
     if ( request.getParameter("vid")!= "" || request.getParameter("vid")!= null){
         String likeQuery = "insert into Likes values ('"+session.getAttribute("pid")+"','" + request.getParameter("vid")+"','"+ new java.sql.Date(new java.util.Date().getTime()) + "');";
+        System.out.println(likeQuery);
         DBConnection.ExecUpdateQuery(likeQuery);
         response.sendRedirect("profileview.jsp?vid="+request.getParameter("vid"));
     }

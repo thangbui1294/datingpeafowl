@@ -5,29 +5,55 @@
   Date: 11/24/14
   Time: 11:46 AM
   To change this template use File | Settings | File Templates.
+
+  pname = profile name
+  vid = profile name / profileid in database
+  ===
+  date referal system:
+
+  d2 = date pair 1
+  d3 = date pair 2
+
+
+
+
+
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
 <%
-    if ( request.getAttribute("vid")!= null || request.getAttribute("vid")!= "") {
-        String profileViewQuery = "select * from Profile where ProfileID='" + request.getAttribute("vid") + "');";
-        java.sql.ResultSet profiles = DBConnection.ExecQuery(profileViewQuery);
-        request.setAttribute("age", profiles.getInt("Age"));
-        request.setAttribute("datingAgeStart", profiles.getInt("DatingAgeRangeStart"));
-        request.setAttribute("datingAgeEnd", profiles.getInt("DatingAgeRangeEnd"));
-        request.setAttribute("datingGeoRange", profiles.getInt("DatinGeoRange"));
-        request.setAttribute("mf", profiles.getString("M_F"));
-        request.setAttribute("hobbies", profiles.getString("Hobbies"));
-        request.setAttribute("weight", profiles.getInt("Weight"));
-        request.setAttribute("height", profiles.getFloat("Height"));
-        request.setAttribute("creationDate", profiles.getDate("CreationDate"));
-        request.setAttribute("updateDate", profiles.getDate("LastModDate"));
-        request.setAttribute("hairColor", profiles.getString("HairColor"));
+    if (request.getParameter("vid")!= null && request.getParameter("vid")   != "") {
 
-    }
-    else{
-        response.sendRedirect("profile.jsp");
+
+        try {
+
+            String profileViewQuery = "select * from Profile where ProfileID='" + request.getParameter("vid") + "';";
+            System.out.println(profileViewQuery);
+            java.sql.ResultSet profiles = DBConnection.ExecQuery(profileViewQuery);
+
+            if (profiles.next()) {
+                request.setAttribute("pname", profiles.getString("ProfileID"));
+                request.setAttribute("age", profiles.getInt("Age"));
+                request.setAttribute("datingAgeStart", profiles.getInt("DatingAgeRangeStart"));
+                request.setAttribute("datingAgeEnd", profiles.getInt("DatingAgeRangeEnd"));
+                request.setAttribute("datingGeoRange", profiles.getInt("DatinGeoRange"));
+                request.setAttribute("mf", profiles.getString("M_F"));
+                request.setAttribute("hobbies", profiles.getString("Hobbies"));
+                request.setAttribute("weight", profiles.getInt("Weight"));
+                request.setAttribute("height", profiles.getFloat("Height"));
+                request.setAttribute("creationDate", profiles.getDate("CreationDate"));
+                request.setAttribute("updateDate", profiles.getDate("LastModDate"));
+                request.setAttribute("hairColor", profiles.getString("HairColor"));
+
+
+            } else {
+                response.sendRedirect("profile.jsp");
+            }
+        } catch (Exception e){
+            response.sendRedirect("profile.jsp");
+
+        }
     }
     %>
 
@@ -64,15 +90,27 @@
                     this is a good boy
                     this is a good boy
                     this is a good boy
+<br>
+                    <a href=like.jsp?vid=<%out.print(request.getParameter("vid"));%>  >Like</a><br>
+                    <% if (session.getAttribute("d2")== "" || session.getAttribute("d2")== null){ %>
+                    <a href="date.jsp?d2=<%out.print(request.getParameter("vid"));%>">Refer a date</a>
+                    <%}else{
+                        if (!session.getAttribute("d2").equals(request.getParameter("vid"))){
+                    %>
+
+                            <a href="date.jsp?d3=<%out.print(request.getParameter("vid"));%>">Refer as a date to <%out.print(session.getAttribute("d2"));%> </a>
+                    <% }
+                    }%>
+
+
                 </div>
-                hello world
             </div>
             <div class="large-1 medium-1 columns" data-equalizer-watch></div>
             <div class="large-5 medium-5 columns" data-equalizer-watch>
                 <div class="theme-bg">
                     <p> <strong>Info</strong>   </p>
                     <div class="large-12 columns">
-                        <p> <strong>Name: </strong> <%out.print( request.getAttribute("firstName") + " "); out.print(request.getAttribute("lastName")); %>
+                        <p> <strong>Name: </strong> <% out.print( request.getAttribute("pname")); %>
                             <br>
                             <strong>Age: </strong> <% out.print(request.getAttribute("age")); %>
                             <br>
